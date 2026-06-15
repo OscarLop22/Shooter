@@ -4,15 +4,12 @@
 
 extern int mapX;
 extern int mapY;
-extern int mapS;
-
+extern int mapSize;
 extern int map[];
 
 
 void initMapValues();
-
 void generateMap();
-
 void drawMap2D();
 
 #endif

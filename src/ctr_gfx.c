@@ -9,6 +9,8 @@
 
 C3D_RenderTarget* top = 0;
 C3D_RenderTarget* bottom = 0;
+C2D_SpriteSheet spriteSheet;
+C2D_Sprite sprites[100];
 
 
 void initGraphics(){
@@ -22,4 +24,17 @@ void initGraphics(){
     top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
   
+}
+
+
+void loadSprites()
+{
+    spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
+	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
+}
+
+void freeSprites()
+{
+    C2D_SpriteSheetFree(spriteSheet);
+
 }

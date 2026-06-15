@@ -7,13 +7,15 @@
 #include <citro2d.h>
 #include <citro3d.h>
 
+#include "ctr_gfx.h"
 
-int mapX=0, mapY=0, mapS=0;
+int mapX=0, mapY=0, mapSize=0;
 int map[64] = {0};
+
 
 void initMapValues()
 {
-    mapX=8, mapY=8, mapS=32;
+    mapX=8, mapY=8, mapSize=32;
 }
 
 
@@ -47,18 +49,27 @@ void drawMap2D()
     {
         for(x=0;x<mapX;x++)
         {
-            u32 clrWall1 = C2D_Color32(0x00, 0x00, 0x00, 0xFF);
-            u32 clrWall2 = C2D_Color32(0x00, 0x00, 0x00, 0xFF);
-            u32 clrWall3 = C2D_Color32(0x00, 0x00, 0x00, 0xFF);
-            u32 clrWall4 = C2D_Color32(0x00, 0x00, 0x00, 0xFF);
+            //u32 clrWall = C2D_Color32(0x00, 0x00, 0x00, 0xFF);
+		    C2D_Sprite* sprite = &sprites[x];
+
+            C2D_SpriteFromSheet(sprite, spriteSheet, 1);
+  
+
             if(map[y*mapX+x]==1){
-                clrWall1 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
-                clrWall2 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
-                clrWall3 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
-                clrWall4 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
+                //clrWall = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
+                C2D_SpriteFromSheet(sprite, spriteSheet, 0);
+
             }
-            xo=x*mapS; yo=y*mapS;
-            C2D_DrawRectangle(xo, yo, 0, mapS-1, mapS-1, clrWall1, clrWall2, clrWall3, clrWall4);
+            xo=x*mapSize; yo=y*mapSize;
+
+            //C2D_SpriteSetCenter(sprite, 0.5f, 0.5f);
+            C2D_SpriteSetPos(sprite, xo, yo);
+            C2D_SpriteSetRotation(sprite, 0);
+            //sprite->dx = rand()*4.0f/RAND_MAX - 2.0f;
+            //sprite->dy = rand()*4.0f/RAND_MAX - 2.0f;
+            
+            C2D_DrawSprite(sprite);
+            //C2D_DrawRectangle(xo, yo, 0, mapS-1, mapS-1, clrWall, clrWall, clrWall, clrWall);
 
         }
     }

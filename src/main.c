@@ -25,9 +25,11 @@ int main(int argc, char* argv[])
 {  
     romfsInit();
     initGraphics();
+    loadSprites();
     initMapValues();
-    generateMap();
     initPlayer();
+
+    generateMap();
 
 	u32 clrClear = C2D_Color32(0x47, 0x75, 0x74, 0xFF);
 
@@ -38,17 +40,22 @@ int main(int argc, char* argv[])
         movePlayer(kHeld);
 
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+            C2D_TargetClear(bottom, clrClear);
+			C2D_SceneBegin(bottom);
+            drawMap2D();
+            drawPlayer();
+
         	C2D_TargetClear(top, clrClear);
 			C2D_SceneBegin(top);
-            //C3D_RenderTargetClear(top, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
-			//C3D_FrameDrawOn(top);
+ 
+            //drawWalls();
             
-            drawMap2D();
             drawRays3D();
-            drawPlayer();
-      
+
+
         C3D_FrameEnd(0);
 
     }
+    freeSprites();
     return 0;
 }
